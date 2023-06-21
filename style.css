@@ -2,6 +2,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   line-height: 1;
+  padding: 30px;
 }
 
 textarea {
@@ -39,8 +40,10 @@ textarea {
 .hour {
   background-color: #ffffff;
   color: #000000;
-  border-top: 1px dashed #000000;
+  border-top : 1px dashed #000000;
+  border-bottom: 1px dashed #000000;
   font-size: larger;
+
 }
 
 .past {
