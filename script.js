@@ -1,12 +1,11 @@
 var dayData;
+var now = dayjs();
 
 function setColors(){
-    var currTime = dayjs();
-
     for(let i = 9; i<18; i++){
-        if(i < currTime.hour()){
+        if(i < now.hour()){
             $("#hour-" + i + " textarea").addClass("past");
-        }else if(i == currTime.hour()){
+        }else if(i == now.hour()){
             $("#hour-" + i + " textarea").addClass("present");
         }else{
              $("#hour-" + i + " textarea").addClass("future");
@@ -15,8 +14,8 @@ function setColors(){
 }
 
 function loadSavedWorkflow(){
-    dayData = JSON.parse(window.localStorage.getItem("events"));//get from local storage
-    if(!dayData){//if dayData has not been established
+    dayData = JSON.parse(window.localStorage.getItem("events"));//get data from local storage
+    if(!dayData){//if data has not been established
         dayData = {
             9:"",
             10:"",
@@ -31,6 +30,7 @@ function loadSavedWorkflow(){
         window.localStorage.setItem("events", JSON.stringify(dayData));
     }
 
+    //load from local storage into browser
     for(let i=9; i<18; i++){
         $("#hour-" + i + " textarea").html(dayData[i]);
     }
@@ -48,9 +48,17 @@ function saveClicked(event){
     event.preventDefault();
 }
 
-$(".saveBtn").on("click", saveClicked);
+function showCurrDay(){
+    //grabs currentDay element and changes its html to today's date using dayjs
+    var currentDayEl = $("#currentDay");
+    currentDayEl.html(now.format('dddd, MMMM D, YYYY'));
+}
 
 $(function() {
     loadSavedWorkflow();
+    showCurrDay();
     setColors();
 });
+
+//on click of saveBtn will call saveClicked
+$(".saveBtn").on("click", saveClicked);
