@@ -1,7 +1,7 @@
 var dayData;
 var now = dayjs();
 
-function setColors(){
+function setColors(){//initiates colors for each time block using dayjs
     for(let i = 9; i<18; i++){
         if(i < now.hour()){
             $("#hour-" + i + " textarea").addClass("past");
@@ -13,7 +13,7 @@ function setColors(){
     }
 }
 
-function loadSavedWorkflow(){
+function loadSavedWorkflow(){//loads local storage date to webpage
     dayData = JSON.parse(window.localStorage.getItem("events"));//get data from local storage
     if(!dayData){//if data has not been established
         dayData = {
@@ -36,7 +36,7 @@ function loadSavedWorkflow(){
     }
 }
 
-function saveClicked(event){
+function saveClicked(event){//saveBtn click event
     //grabs the data from html
     var timeBlock = $(event.target).parent();//this gets the row of the clicked save btn
     var eventValue = timeBlock.children("textarea").val();
@@ -54,11 +54,11 @@ function showCurrDay(){
     currentDayEl.html(now.format('dddd, MMMM D, YYYY'));
 }
 
-$(function() {
+//on click of saveBtn will call saveClicked
+$(".saveBtn").on("click", saveClicked);
+
+$(function() {//main function to run program
     loadSavedWorkflow();
     showCurrDay();
     setColors();
 });
-
-//on click of saveBtn will call saveClicked
-$(".saveBtn").on("click", saveClicked);
